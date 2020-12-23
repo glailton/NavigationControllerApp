@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="br.com.grsoft.navigationcomponentapp.ui.start.StartFragment"
+        android:label="@string/start_action_bar_title"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="br.com.grsoft.navigationcomponentapp.ui.profile.ProfileFragment"
+        android:label="@string/profile_action_bar_title"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="br.com.grsoft.navigationcomponentapp.ui.login.LoginFragment"
+        android:label="@string/login_action_bar_title"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationNavigation"
+            app:destination="@id/registrationNavigation" />
+    </fragment>
+
+    <navigation
+        android:id="@+id/registrationNavigation"
+        app:startDestination="@id/profileDataFragment">
+        <fragment
+            android:id="@+id/profileDataFragment"
+            android:name="br.com.grsoft.navigationcomponentapp.ui.registration.profile.ProfileDataFragment"
+            android:label="@string/profile_data_action_bar_title"
+            tools:layout="@layout/fragment_profile_data" >
+            <action
+                android:id="@+id/action_profileDataFragment_to_credentialFragment"
+                app:destination="@id/credentialsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/credentialsFragment"
+            android:name="br.com.grsoft.navigationcomponentapp.ui.registration.credential.CredentialsFragment"
+            android:label="CredentialsFragment" >
+
+            <argument android:name="name"
+                app:argType="string"
+                app:nullable="false"/>
+        </fragment>
+
+    </navigation>
+</navigation>
