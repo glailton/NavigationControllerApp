@@ -31,10 +31,10 @@ class ProfileFragment : Fragment() {
 
         loginViewModel.authenticationStateEvent.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
-                is LoginViewModel.AuthenticationState.Autheticated -> {
+                is LoginViewModel.AuthenticationState.Authenticated -> {
                     binding.textViewProgileUsername.text = getString(R.string.profile_text_username, loginViewModel.username)
                 }
-                is LoginViewModel.AuthenticationState.Unautheticated -> {
+                is LoginViewModel.AuthenticationState.Unauthenticated -> {
                     findNavController().navigate(R.id.loginFragment)
                 }
             }

@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/forms_default_margin_top"
             android:text="@string/login_button_text_sign_in"
+            android:theme="@style/AppButton.SignUp"
             app:layout_constraintBottom_toTopOf="@+id/buttonLoginSignUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

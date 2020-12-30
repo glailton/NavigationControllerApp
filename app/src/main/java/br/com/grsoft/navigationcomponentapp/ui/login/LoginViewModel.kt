@@ -1,5 +1,6 @@
 package br.com.grsoft.navigationcomponentapp.ui.login
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.grsoft.navigationcomponentapp.R
@@ -7,33 +8,41 @@ import br.com.grsoft.navigationcomponentapp.R
 class LoginViewModel : ViewModel() {
 
     sealed class AuthenticationState {
+        object Unauthenticated : AuthenticationState()
+        object Authenticated : AuthenticationState()
         class InvalidAuthentication(val fields: List<Pair<String, Int>>) : AuthenticationState()
-        class Autheticated : AuthenticationState()
-        class Unautheticated : AuthenticationState()
     }
 
-    val authenticationStateEvent = MutableLiveData<AuthenticationState>()
-
     var username: String = ""
+    var token: String = ""
+
+    private val _authenticationStateEvent = MutableLiveData<AuthenticationState>()
+    val authenticationStateEvent: LiveData<AuthenticationState>
+        get() = _authenticationStateEvent
 
     init {
         refuseAuthentication()
     }
 
-    fun authentication(username: String, password: String) {
-        if (isValidForm(username, password)) {
-            this.username = username
-            authenticationStateEvent.value = AuthenticationState.Autheticated()
-        }
+    fun refuseAuthentication() {
+        _authenticationStateEvent.value = AuthenticationState.Unauthenticated
     }
 
-    fun refuseAuthentication() {
-        authenticationStateEvent.value = AuthenticationState.Unautheticated()
+    fun authenticateToken(token: String, username: String) {
+        this.token = token
+        this.username = username
+        _authenticationStateEvent.value = AuthenticationState.Authenticated
+    }
+
+    fun authenticate(username: String, password: String) {
+        if (isValidForm(username, password)) {
+            this.username = username
+            _authenticationStateEvent.value = AuthenticationState.Authenticated
+        }
     }
 
     private fun isValidForm(username: String, password: String): Boolean {
         val invalidFields = arrayListOf<Pair<String, Int>>()
-
         if (username.isEmpty()) {
             invalidFields.add(INPUT_USERNAME)
         }
@@ -43,7 +52,8 @@ class LoginViewModel : ViewModel() {
         }
 
         if (invalidFields.isNotEmpty()) {
-            authenticationStateEvent.value = AuthenticationState.InvalidAuthentication(invalidFields)
+            _authenticationStateEvent.value =
+                AuthenticationState.InvalidAuthentication(invalidFields)
             return false
         }
 

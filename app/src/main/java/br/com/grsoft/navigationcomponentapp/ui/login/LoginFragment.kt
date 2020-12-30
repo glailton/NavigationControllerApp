@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
                         validationFields[fieldError.first]?.error = getString(fieldError.second)
                     }
                 }
-                is LoginViewModel.AuthenticationState.Autheticated -> {
+                is LoginViewModel.AuthenticationState.Authenticated -> {
                     findNavController().popBackStack()
                 }
             }
@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
             val username = binding.inputLoginUsername.text.toString()
             val password = binding.inputLoginPassword.text.toString()
 
-            viewModel.authentication(username, password)
+            viewModel.authenticate(username, password)
         }
 
         binding.buttonLoginSignUp.setOnClickListener {
